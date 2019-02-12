@@ -1,12 +1,27 @@
 let n
 init ()
-setInterval(()=>{
+let timer = setInterval(()=>{
   $(`.images>img:nth-child(${x(n)})`).removeClass('current').addClass('leave').one('transitionend',function(e){
     $(e.currentTarget).removeClass('leave').addClass('enter')
   })
   $(`.images>img:nth-child(${x(n+1)})`).removeClass('enter').addClass('current')
   n +=1
 },3000)
+
+document.addEventListener('visibilitychange',function(){
+     if(document.hidden){
+        window.clearInterval(timer)
+     }else{
+      timer = setInterval(()=>{
+        $(`.images>img:nth-child(${x(n)})`).removeClass('current').addClass('leave').one('transitionend',function(e){
+          $(e.currentTarget).removeClass('leave').addClass('enter')
+        })
+        $(`.images>img:nth-child(${x(n+1)})`).removeClass('enter').addClass('current')
+        n +=1
+      },3000)
+     }
+})
+
 
 function init(){
     n=1
